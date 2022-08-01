@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Roboto+Serif:opsz@8..144&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Roboto+Serif:opsz@8..144&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=shadow-multiple">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    body {
+        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Roboto Serif', serif;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        justify-content: space-between;
+        box-shadow: 0 3px 6px 0 rgb(0 0 0 / 59%);
+    }
+
+    header>p {
+        font-size: 20px;
+        margin-left: 20px;
+    }
+
+    ul {
+        justify-content: flex-end;
+    }
+
+    ul>li {
+        padding-right: 40px;
+        cursor: pointer;
+        font-size: 20px;
+        list-style-type: none;
+    }
+
+    a,
+    a:visited {
+        text-decoration: none;
+        color: black;
+
+    }
+
+    a:hover {
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 20px;
+        letter-spacing: 0.5px;
+        margin: 15px 0 20px;
+    }
+
+    .main-container {
+        padding: 20px;
+        text-align: center;
+        background-image: linear-gradient(120deg, #DAE2F8, #D6A4A4);
+        min-height: 92vh;
+        box-shadow: 0 3px 6px 0 rgb(0 0 0 / 59%);
+    }
+
+    .bmi-calculator {
+        width: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: #fff;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 20px #555;
+    }
+
+    h2 {
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    .text {
+        text-align: left;
+        margin-left: 150px;
+    }
+
+    #h,
+    #w {
+        color: #222f3e;
+        text-align: left;
+        font-size: 20px;
+        font-weight: 200;
+        border: none;
+        outline: none;
+        background: none;
+        border-bottom: 1px solid #341f97;
+        width: 200px;
+    }
+
+    #h:focus,
+    #w:focus {
+        border-bottom: 2px solid #341f97;
+        width: 300px;
+        transition: 0.5s;
+    }
+
+    #result {
+        color: #341f97;
+        font-size: 20px;
+        margin-top: 40px;
+    }
+
+    #btn {
+        margin-top: 10px;
+        border: none;
+        color: #fff;
+        background-image: linear-gradient(120deg, #ff6b6b, #5f27cd);
+        width: 150px;
+        padding: 10px;
+        border-radius: 30px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    #btn:hover {
+        box-shadow: 1px 1px 10px #341f97;
+    }
+
+    #info {
+        font-size: 12px;
+
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+
+    .modal-content {
+        background-color: #f3c4c89c;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 550px;
+        height: 764px;
+    }
+
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: -25px;
+        margin-right: -10px;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .started {
+        background-image: linear-gradient(120deg, #ff6b6b, #8474a1);
+        outline: none;
+        border: transparent;
+        border-radius: 10px;
+        width: 185px;
+        height: 43px;
+        color: white;
+        font-size: 15px;
+        bottom: 112px;
+        margin-right: 14px;
+        cursor: pointer;
+
+    }
+
+    .open-button {
+        background-image: linear-gradient(120deg, #062614, #897aa5);
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        bottom: 124px;
+        right: 61px;
+        width: 302px;
+        height: 56px;
+        border-radius: 20px;
+        font-size: 15px;
+    }
+
+    .button-text {
+        position: fixed;
+        bottom: 186px;
+        right: 61px;
+        font-family: 'Crimson Text', serif;
+        font-size: 20px;
+        color: rgb(0 0 0);
+    }
+
+
+    .form-popup {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 596px;
+    }
+
+
+    .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+    }
+
+
+    .form-container input[type=text],
+    .form-container input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+    }
+
+
+    .form-container input[type=text]:focus,
+    .form-container input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+
+    .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+
+    .form-container .cancel {
+        background-color: red;
+    }
+
+
+    .form-container .btn:hover,
+    .open-button:hover {
+        opacity: 1;
+    }
+
+    .bmrTitle {
+        margin-top: 10px;
+    }
+
+    .titles {
+        flex: 1;
+        justify-content: center;
+        margin-top: 40px;
+
+    }
+
+    .bmr-calculator {
+        width: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-color: #fff;
+        transform: translate(-50%, -50%);
+        padding: 76px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 20px #555;
+    }
+
+    .bmr-calculator,
+    .bmr-calculator * {
+        box-sizing: border-box;
+    }
+
+    .bmr-calculator h2 {
+        text-align: center;
+        font-size: 30px;
+
+        font-weight: 600;
+        margin: -8px -24px 8px;
+        padding: 16px;
+    }
+
+    .bmr-calculator .formBmr h3 {
+        font-size: 15px;
+        text-transform: uppercase;
+        margin: 16px 0 10px 0;
+        text-align: left;
+    }
+
+    .bmr-calculator .formBmr input[type="text"] {
+        width: 100%;
+        padding: 4px 16px;
+        font-size: 17px;
+        border: 1px solid #d5dbdb;
+    }
+
+    .bmr-calculator .formBmr {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .bmr-calculator .formBmr #female {
+        margin-left: 20px;
+    }
+
+    .bmr-calculator .formBmr .height,
+    .bmr-calculator .formBmr .weight {
+        position: relative;
+    }
+
+    .bmr-calculator .formBmr .unit {
+        position: absolute;
+        right: 20px;
+        top: 50px;
+        color: #777;
+    }
+
+    .bmr-calculator .resultBmr .calculate-btn {
+        padding: 8px 24px;
+        margin: 16px 0;
+        font-size: 18px;
+        font-weight: 100;
+        text-transform: uppercase;
+        border: none;
+        background: #333;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 32px;
+    }
+
+    .bmr-calculator .resultBmr {
+        text-align: center;
+        color: #4e4e4e;
+        font-size: 18px;
+    }
+
+    .bmr-calculator .resultBmr .calories {
+        color: green;
+        font-size: 38px;
+        font-weight: 900;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <header class="row">
+            <div class="row">
+                <img src="https://cdn-icons-png.flaticon.com/512/860/860968.png"
+                    style="width: 30px; height: 30px; object-fit: fill; margin: 10px 0 0 10px;">
+                <p><a href="index.html">Healty Food</a></p>
+            </div>
+            <ul class="row">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="FoodRecipe.html">Food Recipe</a></li>
+                <li><a href="joinNow.html">Join Now</a></li>
+            </ul>
+
+        </header>
+
+        <div class="main-container">
+            <div class="row titles">
+                <img src="https://cdn-icons.flaticon.com/png/512/4213/premium/4213223.png?token=exp=1656594128~hmac=bfd90a9dc8f57b45408f45809a2468e5"
+                    style="width: 65px;
+                height: 60px;
+                margin-right: 15px;">
+                <h5>BMI (Body Mass Index) is a measurement of body fat based on height and weight that applies.
+
+                    BMI can be used to indicate if you are overweight, obese, underweight or normal. <br>A healthy BMI
+                    score is between 20 and 25. A score below 20 indicates that you may be underweight; a value above 25
+                    indicates that you may be overweight.</h5>
+            </div>
+            <span class="bmrTitle"></span>
+            <div class="bmi-calculator">
+                <h2>BMI Calculator</h2>
+                <p class="text"> Height</p>
+                <input type="text" id="h">
+                <p class="text"> Weight</p>
+                <input type="text" id="w">
+                <p id="result"></p>
+                <button id="btn" onClick="BMI()">Calculate</button>
+                <p id="info">Please enter height(cm) and weight(kg)</p>
+            </div>
+
+
+            <div id="myModal" class="modal">
+
+
+                <div class="modal-content">
+                    <div class="bmr-calculator">
+                        <h2>BMR Calculator</h2>
+                        <div class="controls">
+                            <form class="formBmr">
+                                <h3>Age</h3>
+                                <input type="text" id="age">
+                                <div class="gender">
+                                    <h3>Gender</h3>
+                                    <input type="radio" id="male" value="female" name="gender" checked>
+                                    <label for="male">Female</label>
+                                    <input type="radio" id="male" value="male" name="gender">
+                                    <label for="male">Male</label>
+                                </div>
+                                <div class="height">
+                                    <h3>Height</h3>
+                                    <input type="text" id="height">
+                                    <div class="unit">cm</div>
+                                </div>
+                                <div class="weight">
+                                    <h3>Height</h3>
+                                    <input type="text" id="weight">
+                                    <div class="unit">kg</div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="resultBmr">
+                            <button class="calculate-btn">Calculate</button>
+                            <div class="result-message">
+                                <span class="calories">1,400 </span>
+                                Calories/day
+                            </div>
+                        </div>
+                    </div>
+                    <span class="close">&times;</span>
+
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+            <p class="button-text">Do you want to calculate<br> metabolic rate with BMR Calculator?</p>
+            <button class="open-button" onclick="openForm()">Check Out BMR Calculator</button>
+
+            <div class="form-popup" id="myForm">
+                <h5>Find out how many calories your body burns while resting with this free basal metabolic rate (BMR)
+                    calcutor. </h5>
+
+
+                <button class="started" id="myBtn">BMR Calculator</button>
+                <button type="button" class="btn cancel started" onclick="closeForm()">Close</button>
+
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        function BMI() {
+            var h = document.getElementById('h').value;
+            var w = document.getElementById('w').value;
+            var bmi = w / (h / 100 * h / 100);
+            var bmio = (bmi.toFixed(2));
+            document.getElementById("result").innerHTML = "Your BMI is " + bmio;
+        }
+
+
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        //Find out how many calories your body burns while resting with this free basal metabolic rate (BMR) calcutor. 
+
+        // function showNotification() {
+        //     const notification = new Notification("Hey youuu look at me!!!", {
+        //         body: "Come on now check out BMR calculator button..."
+        //     });
+
+
+        // }
+        // console.log(Notification.permission);
+
+        // if (Notification.permission === "granted") {
+        //     showNotification();
+        // } else if (Notification.permission !== "denied") {
+        //     Notification.requestPermission().then(permission => {
+        //         console.log(permission);
+        //     })
+        // }
+
+
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+
+
+        const calories = document.querySelector(".bmr-calculator .resultBmr .calories");
+        const calculateBtn = document.querySelector('.bmr-calculator .resultBmr .calculate-btn');
+        const age = document.querySelector('.bmr-calculator .formBmr  #age');
+        const height = document.querySelector('.bmr-calculator .formBmr  #height');
+        const weight = document.querySelector('.bmr-calculator .formBmr  #weight');
+        //BMR = 10*weight + 6.25*height -5*age + 5
+        //BMR = 10*weight + 6.25*height - 5*age -161
+
+        const calculateBMR = (weight, height, age, gender) => {
+            if (gender == "male") {
+                return 10 * weight + 6.25 * height - 5 * age + 5;
+            }
+            return 10 * weight + 6.25 * height - 5 * age - 161;
+        };
+        calculateBtn.addEventListener("click", () => {
+            let genderValue = document.querySelector(".bmr-calculator .formBmr input[name='gender']:checked").value;
+            let BMR = calculateBMR(weight.value, height.value, age.value, genderValue);
+
+            calories.innerHTML = BMR.toLocaleString("en-US");
+        });
+    </script>
+</body>
+
+</html>
